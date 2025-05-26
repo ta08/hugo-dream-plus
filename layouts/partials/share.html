@@ -4,7 +4,7 @@
 {{ $authorAvatar := .Params.author.avatar | default (cond $flag $.Site.Params.author.avatar (index (seq 1 4 | shuffle) 0 )) }}
 {{ $avatarFlag := cond (ne .Params.author.avatar nil) false (not $flag) }}
 {{ $authorDesc := .Params.author.desc | default $.Site.Params.author.motto }}
-{{ $twitter := .Params.author.twitter | default (cond (and (ne $.Site.Social.twitter nil) $flag) $.Site.Social.twitter "") }}
+{{ $twitter := .Params.author.twitter | default (cond (and (ne $.Site.Params.Social.twitter nil) $flag) $.Site.Params.Social.twitter "") }}
 
 {{/*Author description*/}}
 <div class="author">
@@ -22,14 +22,25 @@
 </div>
 
 {{/*Social buttons*/}}
-<section class="buttons row box">
-	<div class="facebook none flexbox" href="#" onclick="window.open(
-			'https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href),
-			'facebook-share-dialog',
-			'width=626,height=436'); return false;">
-		<button class="ui facebook button"><i class="facebook icon"></i>Share</button>
+<div class="share row box">
+	<div class="sixteen wide mobile eight wide tablet four wide computer column">
+		<div class="facebook flexbox" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u={{ .Permalink }}','_self')">
+			<i class="facebook icon"></i>
+		</div>
 	</div>
-	<div class="twitter none flexbox" onclick="window.open('https://twitter.com/intent/tweet?text=Read &quot;{{ .LinkTitle }} {{ with .Site.Social.twitter }}&quot; by @{{ . }}{{ end }} {{ .Permalink }}','_self')">
-		<button class="ui twitter button"><i class="twitter icon"></i>Tweet</button>
+	<div class="sixteen wide mobile eight wide tablet four wide computer column">
+		<div class="twitter none flexbox" onclick="window.open('https://twitter.com/intent/tweet?text=Read &quot;{{ .LinkTitle }} {{ with .Site.Params.Social.twitter }}&quot; by @{{ . }}{{ end }} {{ .Permalink }}','_self')">
+			<i class="twitter icon"></i>
+		</div>
 	</div>
-</section>
+	<div class="sixteen wide mobile eight wide tablet four wide computer column">
+		<div class="linkedin none flexbox" onclick="window.open('https://www.linkedin.com/shareArticle?mini=true&url={{ .Permalink }}&title={{ .LinkTitle }}&summary={{ .Description }}&source={{ .Site.Title }}','_self')">
+			<i class="linkedin icon"></i>
+		</div>
+	</div>
+	<div class="sixteen wide mobile eight wide tablet four wide computer column">
+		<div class="reddit none flexbox" onclick="window.open('https://reddit.com/submit?url={{ .Permalink }}&title={{ .LinkTitle }}','_self')">
+			<i class="reddit icon"></i>
+		</div>
+	</div>
+</div>

@@ -22,8 +22,8 @@
 
 				<div class="sub header">
 					<div><span><i class="calendar outline icon"></i>{{ .Date.Format "Jan 2, 2006" }}</span></div>
-					{{ if $.Site.DisqusShortname }}
-					<div><span class="disqusComment"><i class="comment outline icon"></i><a href="{{ .Permalink }}#disqus_thread" class="disqus-comment-count" data-disqus-identifier="{{ .UniqueID }}"></a></span></div>{{ end }}
+					{{ if $.Site.Params.DisqusShortname }}
+					<div><span class="disqusComment"><i class="comment outline icon"></i><a href="{{ .Permalink }}#disqus_thread" class="disqus-comment-count" data-disqus-identifier="{{ .File.UniqueID }}"></a></span></div>{{ end }}
 					<div><span><i class="clock outline icon"></i>{{ .ReadingTime }} min read</span></div>
 					<div><span><i class="angle double up icon"></i>{{ i18n "lastUpdate" }} {{ dateFormat "Jan 2, 2006" .Lastmod }}</span></div>
 				</div>
@@ -51,7 +51,7 @@
 
 			{{/*Share card*/}}
 			{{ if $.Site.Params.features.shareCard }}
-				<section class="ui secondary {{ if not $.Site.DisqusShortname }}bottom{{ end }} attached segment share row box">
+				<section class="ui secondary {{ if not $.Site.Params.DisqusShortname }}bottom{{ end }} attached segment share row box">
 					{{ partial "share.html" . }}
 				</section>
 			{{ end }}
@@ -65,7 +65,7 @@
 			{{ end }}
 
 			{{/*Disqus comments*/}}
-			{{ if $.Site.DisqusShortname }}
+			{{ if $.Site.Params.DisqusShortname }}
 				<div class="ui secondary bottom attached stacked segment disqus">
 					{{ partial "disqus.html" . }}
 				</div>
@@ -76,7 +76,7 @@
 
 {{ define "bodyEnd" }}
 	{{/*Load Disqus Count JS*/}}
-	{{ with $.Site.DisqusShortname }}
-		<script id="dsq-count-scr" src="//{{ $.Site.DisqusShortname }}.disqus.com/count.js" async></script>
+	{{ with $.Site.Params.DisqusShortname }}
+		<script id="dsq-count-scr" src="//{{ $.Site.Params.DisqusShortname }}.disqus.com/count.js" async></script>
 	{{ end }}
 {{ end }}
